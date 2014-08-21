@@ -1,0 +1,473 @@
+@charset "UTF-8";
+#body {
+  font-family: "Lucida Grande", "segoe UI", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Meiryo, Verdana, Arial, sans-serif;
+  font-size: 16px;
+  color: #2b2b2b;
+  background: #f3f3f3;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.amemo-search {
+  font-family: inherit;
+  transition: 0.3s ease-in;
+  font-size: 1.2em;
+  box-sizing: border-box;
+  background: transparent;
+  width: 100%;
+  padding: 0.5em 0.8em;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+.amemo-search:focus {
+  border-color: #2a83a2;
+}
+
+.amemo-root {
+  width: 83%;
+  margin: 6.5em auto 1em;
+  position: relative;
+}
+@media screen and (min-width: 700px) {
+  .amemo-root {
+    width: 610px;
+  }
+}
+
+.amemo-add {
+  transition: 0.3s ease-in;
+  text-align: center;
+  height: 4.5em;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: #f3f3f3;
+  overflow: hidden;
+  box-shadow: 0 0 0 transparent;
+}
+.amemo-add:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to right, transparent, transparent 30%, rgba(0, 0, 0, 0.1), transparent 70%, transparent);
+}
+
+.amemo-add-button {
+  font-size: 3.4em;
+  color: rgba(0, 0, 0, 0.1);
+  transition: color 0.2s ease-in, background 0.2s ease-in 0.3s, transform 0.4s ease-in;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  position: relative;
+  top: 5px;
+  border-radius: 50%;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: transparent;
+  cursor: pointer;
+  transform: rotate(0deg);
+}
+.amemo-add-button:hover {
+  color: #2a83a2;
+  background: white;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: transparent;
+  transform: rotate(0deg);
+  transition: background 0.2s ease-in, border-color 0.05s ease-in 0.05s, color 0.2s ease-in 0.3s, transform 0.4s ease-in;
+}
+
+.amemo-add-act {
+  height: 15em;
+  box-shadow: 0 1px 6px -2px rgba(0, 0, 0, 0.1);
+}
+.amemo-add-act .amemo-add-button {
+  transition: color 0s ease-in 0s, transform 0.4s ease-in, border-color 0.05s ease-in 0.35s;
+  color: #cb5b35;
+  background: white;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  transform: rotate(45deg);
+}
+
+.amemo-add-button {
+  line-height: 1;
+}
+
+.amemo-new {
+  width: 610px;
+  margin: 0 auto;
+  position: absolute;
+  top: 5em;
+  left: 0;
+  right: 0;
+}
+
+.amemo-new-textarea {
+  font-family: inherit;
+  transition: 0.3s ease-in;
+  box-sizing: border-box;
+  line-height: 1.5;
+  width: 100%;
+  height: 8em;
+  padding: 0.75em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  outline: none;
+  resize: none;
+}
+.amemo-new-textarea:focus {
+  border-color: #2a83a2;
+}
+
+.amemo-new-menu {
+  transition: opacity 0.3s ease-in;
+  width: 580px;
+  margin: 0.35em auto;
+  text-align: right;
+  opacity: 0.3;
+}
+
+.amemo-new-opacity {
+  opacity: 1;
+}
+
+.amemo-new-menu:empty {
+  background: black;
+}
+
+.amemo-new-reset {
+  transition: 0.3s ease-in;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.4);
+  margin-right: 1em;
+  -webkit-user-select: none;
+}
+
+.amemo-new-opacity .amemo-new-reset {
+  cursor: pointer;
+}
+.amemo-new-opacity .amemo-new-reset:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.amemo-new-button {
+  display: inline-block;
+  color: white;
+  background: #2a83a2;
+  padding: 0.3em 0.55em;
+  border-radius: 2px;
+  -webkit-user-select: none;
+}
+
+.amemo-new-opacity .amemo-new-button {
+  cursor: pointer;
+}
+
+.amemo-new-btnlabel {
+  transition: 0.3s ease-in;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.amemo-new-opacity .amemo-new-button:hover .amemo-new-btnlabel {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.amemo-content {
+  background: white;
+  padding: 0.75em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0.75em 0;
+  border-radius: 1px;
+  position: relative;
+}
+
+.amemo-memo {
+  min-height: 2em;
+}
+
+.amemo-memo, .amemo-memo-edit {
+  padding: 0.5em 0;
+  line-height: 1.3;
+}
+
+.amemo-memo-edit {
+  font-family: inherit;
+  border: none;
+  height: 13em;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75em;
+  border: 1px solid #cfcfcf;
+  resize: none;
+  outline: none;
+}
+
+.amemo-meta {
+  font-size: 0.8em;
+  background: #fafafa;
+  padding: 0.55em;
+  margin-left: -0.9em;
+  width: calc(100% + 9px);
+  letter-spacing: 1px;
+  overflow: hidden;
+  position: relative;
+  top: 12px;
+}
+
+.amemo-date {
+  float: left;
+  width: calc(30% - 1em);
+  margin-left: 1em;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.amemo-url {
+  float: right;
+  width: calc(68% - 1em);
+  margin-right: 1em;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amemo-a {
+  white-space: pre;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.4);
+}
+.amemo-a[href] {
+  color: #2a83a2;
+  opacity: 0.55;
+  text-decoration: underline;
+}
+.amemo-a[href]:hover {
+  text-decoration: none;
+}
+
+.amemo-menu-page, .amemo-menu-memo {
+  color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+}
+
+.amemo-menu-page {
+  left: -34px;
+}
+.amemo-menu-memo {
+  right: -34px;
+}
+
+.i-pen {
+  font-size: 1.7em;
+}
+
+.amemo-pin, .amemo-edit {
+  transition: 0.3s ease-in;
+  text-align: center;
+  overflow: hidden;
+  -webkit-user-select: none;
+}
+.amemo-pin:hover, .amemo-edit:hover {
+  color: #2a83a2;
+  cursor: pointer;
+}
+
+.amemo-pin {
+  width: 2em;
+  height: 2em;
+  line-height: 2.25;
+  transform: rotate(-45deg);
+}
+.amemo-pin-act {
+  color: #2a83a2;
+  transform: rotate(0deg);
+}
+
+.amemo-edit {
+  height: 1.95em;
+  line-height: 2.1;
+  transform: rotate(45deg);
+}
+.amemo-edit-act {
+  transform: rotate(0deg);
+}
+
+.i-edit {
+  font-size: 1.1em;
+  position: relative;
+  left: 3px;
+  top: -1px;
+}
+
+.i-ok {
+  font-size: 2em;
+  line-height: 1;
+  color: #2a83a2;
+}
+
+.amemo-delete {
+  font-size: 2.1em;
+  transition: 0.3s ease-in;
+  height: 1em;
+  line-height: 1.7;
+  overflow: hidden;
+  margin-top: 0.25em;
+}
+.amemo-delete:hover {
+  color: #cb5b35;
+  cursor: pointer;
+}
+
+.i-del {
+  position: relative;
+  top: -8px;
+  left: 1px;
+}
+
+.option-root {
+  width: 610px;
+  margin: 0 auto;
+}
+
+.option-section {
+  clear: left;
+  margin: 2em 0;
+  overflow: hidden;
+}
+
+.option-h1 {
+  font-size: 1.35em;
+  font-weight: normal;
+}
+
+.option-radio-area {
+  display: table;
+  background: #fafafa linear-gradient(to right, transparent 48.7%, rgba(0, 0, 0, 0.2), transparent 51.3%);
+  width: 40%;
+  min-width: 200px;
+  position: relative;
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.2);
+}
+
+.option-label {
+  display: table-cell;
+  padding: 0.5em 0.8em;
+  text-align: center;
+  width: 50%;
+}
+
+.option-radio {
+  display: none;
+}
+.option-radio:checked + .option-label {
+  color: white;
+  background: #2a83a2;
+}
+
+.option-text {
+  transition: 0.3s ease-in;
+  float: left;
+  height: 2em;
+  text-indent: 0.5em;
+  border: 1px solid #cfcfcf;
+  background: #fafafa;
+  outline: none;
+}
+.option-text:focus {
+  border: 1px solid #2a83a2;
+}
+
+.option-button {
+  float: left;
+  color: white;
+  padding: 0.3em 0.8em;
+  background: #2a83a2;
+  width: 3em;
+  text-align: center;
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.option-button:active {
+  background: #1f627a;
+}
+
+.render > *:first-child {
+  margin-top: 0;
+}
+.render > *:last-child {
+  margin-bottom: 0;
+}
+.render * {
+  margin: 0.75em 0;
+}
+.render h1 {
+  font-size: 1.25em;
+  margin-bottom: 1em;
+}
+.render h2 {
+  font-size: 1.21em;
+  margin-bottom: 1em;
+}
+.render h3 {
+  font-size: 1.15em;
+  margin-bottom: 1em;
+}
+.render h4 {
+  font-size: 1.1em;
+  margin-bottom: 1em;
+}
+.render h5 {
+  font-size: 1.05em;
+  margin-bottom: 1em;
+}
+.render h6 {
+  font-size: 1.02em;
+  margin-bottom: 1em;
+}
+.render img {
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.3em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+.render a {
+  color: #2a83a2;
+  text-decoration: none;
+  transition: 0.3s ease-in;
+  opacity: 0.55;
+}
+.render a:hover {
+  opacity: 1;
+}
+.render hr {
+  height: 1px;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #cfcfcf;
+  margin: 1.3em 0;
+}
+.render pre {
+  color: white;
+  background: #2a3336;
+  padding: 1em;
+}
+.render li {
+  margin: 0.25em 0;
+}
+.render ul ul, .render ul ol, .render ol ul, .render ol ol {
+  margin: 0.25em 0;
+}

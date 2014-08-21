@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Option | ChoiMemo</title>
+  <link href="https://fontastic.s3.amazonaws.com/ctqPAJcN67LDCsMD4pxpGT/icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="body">
+  <div class="option-root">
+    <section class="option-section">
+      <h1 class="option-h1">オリジナルメモの記述モード</h1>
+      <div class="option-radio-area">
+        <input id="markdown" class="option-radio" name="write" type="radio" value="markdown" v-model="options.write">
+        <label for="markdown" class="option-label" v-on="click: update('write', 'markdown')">Markdown</label>
+        <input id="normal" class="option-radio" name="write" type="radio" value="normal" v-model="options.write">
+        <label for="normal" class="option-label" v-on="click: update('write', 'normal')">Normal</label>
+      </div>
+    </section>
+    <section class="option-section">
+      <h1 class="option-h1">メモ下のリンクを新しいタブで開く</h1>
+      <div class="option-radio-area">
+        <input id="this-tab" class="option-radio" name="this-tab" type="radio" value="_blank" v-model="options.target">
+        <label for="this-tab" class="option-label" v-on="click: update('target', '_blank')">on</label>
+        <input id="new-tab" class="option-radio" name="new-tab" type="radio" value="_self" v-model="options.target">
+        <label for="new-tab" class="option-label" v-on="click: update('target', '_self')">off</label>
+      </div>
+    </section>
+    <section class="option-section">
+      <h1 class="option-h1">フォントを変更</h1>
+      <input class="option-text" name="new-tab" type="text" v-model="options.font">
+      <div role="button" class="option-button" v-on="click: update('font', options.font)">保存</div>
+    </section>
+    <section class="option-section">
+      <h1 class="option-h1">すべてのメモを削除</h1>
+      <div role="button" class="option-button" v-on="click: delete">実行</div>
+  </div>
+  <script src="js/vue.min.js"></script>
+  <script src="js/option.js"></script>
+</body>
+</html>

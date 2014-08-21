@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "ChoiMemo(New Tab)",
+  "short_name": "ChoiMemo",
+  "description": "選択した文章をメモしたり、画像をメモしたり、又はその両方。新しいタブページでメモした内容をすぐに確認できます。自分でメモを書くこともできます。",
+  "version": "1.0.1.1",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "storage"
+  ],
+
+  "icons": {
+    "16": "icon/icon_16.png",
+    "128": "icon/icon_128.png"
+  },
+
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "options_page": "option.html",
+
+  "web_accessible_resources": ["newtab.html"],
+
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["js/contentscript.js"]
+  }],
+
+  "background": {
+    "scripts": ["js/background.js"]
+  }
+}

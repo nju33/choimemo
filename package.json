@@ -1,0 +1,36 @@
+{
+  "name": "choimemo",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/totora0155/choimemo.git"
+  },
+  "author": "totora0155",
+  "license": "CC BY",
+  "bugs": {
+    "url": "https://github.com/totora0155/choimemo/issues"
+  },
+  "homepage": "https://github.com/totora0155/choimemo",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^2.1.4",
+    "grunt-combine-media-queries": "^1.0.19",
+    "grunt-contrib-coffee": "^0.11.1",
+    "grunt-contrib-compress": "^0.10.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-htmlmin": "^0.3.0",
+    "grunt-contrib-imagemin": "^0.8.0",
+    "grunt-contrib-sass": "^0.7.4",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-csscomb": "^3.0.0",
+    "grunt-csso": "^0.6.3",
+    "grunt-ngmin": "0.0.3",
+    "load-grunt-tasks": "^0.6.0"
+  }
+}

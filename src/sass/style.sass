@@ -1,0 +1,425 @@
+@charset "utf-8"
+
+$blue: #2a83a2
+$red: #cb5b35
+
+#body
+  font-family: "Lucida Grande", "segoe UI", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Meiryo, Verdana, Arial, sans-serif
+  font-size: 16px
+  color: #2b2b2b
+  background: #f3f3f3
+  margin: 0
+  min-height: 100vh
+  overflow-x: hidden
+
+.amemo-search
+  font-family: inherit
+  transition: .3s ease-in
+  font-size: 1.2em
+  box-sizing: border-box
+  background: transparent
+  width: 100%
+  padding: .5em .8em
+  border-width: 0 0 1px
+  border-style: solid
+  border-color: rgba(0, 0, 0, 0.1)
+  outline: none
+  &:focus
+    border-color: #2a83a2
+
+.amemo-root
+  width: 83%
+  margin: 6.5em auto 1em
+  position: relative
+  @media screen and (min-width: 700px)
+    width: 610px
+
+.amemo-add
+  transition: .3s ease-in
+  text-align: center
+  height: 4.5em
+  width: 100%
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 2
+  background: #f3f3f3
+  overflow: hidden
+  box-shadow: 0 0 0 transparent
+  &:after
+    content: ''
+    display: block
+    height: 1px
+    width: 100%
+    position: absolute
+    bottom: 0
+    background-image: linear-gradient(to right, transparent, transparent 30%, rgba(0, 0, 0, 0.1), transparent 70%, transparent)
+
+.amemo-add-button
+  font-size: 3.4em
+  color: rgba(0, 0, 0, 0.1)
+  transition: color 0.2s ease-in, background 0.2s ease-in 0.3s, transform 0.4s ease-in
+  display: inline-block
+  height: 1em
+  overflow: hidden
+  position: relative
+  top: 5px
+  border-radius: 50%
+  border-width: 0 2px 2px 0
+  border-style: solid
+  border-color: transparent
+  cursor: pointer
+  transform: rotate(0deg)
+  &:hover
+    color: #2a83a2
+    background: #fff
+    border-width: 0 2px 2px 0
+    border-style: solid
+    border-color: transparent
+    transform: rotate(0deg)
+    transition: background 0.2s ease-in, border-color 0.05s ease-in 0.05s, color 0.2s ease-in 0.3s, transform 0.4s ease-in
+
+.amemo-add-act
+  .amemo-add-button
+    transition: color 0s ease-in 0s, transform 0.4s ease-in, border-color 0.05s ease-in 0.35s
+    color: #cb5b35
+    background: #fff
+    border-width: 0 2px 2px 0
+    border-style: solid
+    border-color: rgba(0, 0, 0, 0.1)
+    transform: rotate(45deg)
+  height: 15em
+  box-shadow: 0 1px 6px -2px rgba(0, 0, 0, 0.1)
+
+.amemo-add-button
+  line-height: 1
+
+.i-add
+  // line-height: 1.25
+  // margin-left: 1px
+  // position: relative
+  // bottom: 6px
+
+.amemo-new
+  width: 610px
+  margin: 0 auto
+  position: absolute
+  top: 5em
+  left: 0
+  right: 0
+
+.amemo-new-textarea
+  font-family: inherit
+  transition: .3s ease-in
+  box-sizing: border-box
+  line-height: 1.5
+  width: 100%
+  height: 8em
+  padding: .75em
+  border: 1px solid rgba(0, 0, 0, 0.1)
+  outline: none
+  resize: none
+  &:focus
+    border-color: #2a83a2
+
+.amemo-new-menu
+  transition: opacity .3s ease-in
+  width: 580px
+  margin: .35em auto
+  text-align: right
+  opacity: .3
+
+.amemo-new-opacity
+  opacity: 1
+
+.amemo-new-menu:empty
+  background: black
+
+.amemo-new-reset
+  transition: .3s ease-in
+  display: inline-block
+  color: rgba(0, 0, 0, 0.4)
+  margin-right: 1em
+  -webkit-user-select: none
+
+.amemo-new-opacity .amemo-new-reset
+  cursor: pointer
+  &:hover
+    color: rgba(0, 0, 0, 0.8)
+
+.amemo-new-button
+  display: inline-block
+  color: #fff
+  background: #2a83a2
+  padding: .3em .55em
+  border-radius: 2px
+  -webkit-user-select: none
+
+.amemo-new-opacity .amemo-new-button
+  cursor: pointer
+
+.amemo-new-btnlabel
+  transition: .3s ease-in
+  color: rgba(255, 255, 255, 0.4)
+
+.amemo-new-opacity .amemo-new-button:hover .amemo-new-btnlabel
+  color: rgba(255, 255, 255, 0.8)
+
+.amemo-content
+  background: #fff
+  padding: .75em
+  border: 1px solid rgba(0, 0, 0, 0.1)
+  margin: .75em 0
+  border-radius: 1px
+  position: relative
+
+.amemo-memo
+  min-height: 2em
+
+.amemo-memo, .amemo-memo-edit
+  padding: .5em 0
+  line-height: 1.3
+
+.amemo-memo-edit
+  font-family: inherit
+  border: none
+  height: 13em
+  width: 100%
+  box-sizing: border-box
+  padding: .75em
+  border: 1px solid #cfcfcf
+  resize: none
+  outline: none
+
+.amemo-meta
+  font-size: .8em
+  background: #fafafa
+  padding: .55em
+  margin-left: -0.9em
+  width: calc(100% + 9px)
+  letter-spacing: 1px
+  overflow: hidden
+  position: relative
+  top: 12px
+
+.amemo-date
+  float: left
+  width: calc(30% - 1em)
+  margin-left: 1em
+  color: rgba(0, 0, 0, 0.35)
+
+.amemo-url
+  float: right
+  width: calc(68% - 1em)
+  margin-right: 1em
+  text-align: right
+  overflow: hidden
+  text-overflow: ellipsis
+
+.amemo-a
+  white-space: pre
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.4)
+  &[href]
+    color: #2a83a2
+    opacity: .55
+    text-decoration: underline
+    &:hover
+      text-decoration: none
+
+%amemo-menu
+  color: rgba(0, 0, 0, 0.1)
+  position: absolute
+  top: 0
+.amemo-menu-
+  &page
+    @extend %amemo-menu
+    left: -34px
+
+  &memo
+    @extend %amemo-menu
+    right: -34px
+
+.i-pen
+  font-size: 1.7em
+
+
+%amemo-amenu
+  transition: .3s ease-in
+  text-align: center
+  overflow: hidden
+  -webkit-user-select: none
+  &:hover
+    color: $blue
+    cursor: pointer
+
+.amemo-pin
+  &
+    @extend %amemo-amenu
+    width: 2em
+    height: 2em
+    line-height: 2.25
+    transform: rotate(-45deg)
+
+  &-act
+    color: $blue
+    transform: rotate(0deg)
+
+.amemo-edit
+  &
+    @extend %amemo-amenu
+    height: 1.95em
+    line-height: 2.1
+    transform: rotate(45deg)
+
+  &-act
+    transform: rotate(0deg)
+
+.i-edit
+  font-size: 1.1em
+  position: relative
+  left: 3px
+  top: -1px
+
+.i-ok
+  font-size: 2em
+  line-height: 1
+  color: $blue
+
+.amemo-delete
+  font-size: 2.1em
+  transition: .3s ease-in
+  height: 1em
+  line-height: 1.7
+  overflow: hidden
+  margin-top: .25em
+  &:hover
+    color: $red
+    cursor: pointer
+
+.i-del
+  position: relative
+  top: -8px
+  left: 1px
+
+.option-root
+  width: 610px
+  margin: 0 auto
+
+.option-section
+  clear: left
+  margin: 2em 0
+  overflow: hidden
+
+.option-h1
+  font-size: 1.35em
+  font-weight: normal
+
+.option-radio-area
+  display: table
+  background: #fafafa linear-gradient(to right, transparent 48.7%, rgba(0, 0, 0, 0.2), transparent 51.3%)
+  width: 40%
+  min-width: 200px
+  position: relative
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.2)
+
+.option-label
+  display: table-cell
+  padding: .5em .8em
+  text-align: center
+  width: 50%
+
+.option-radio
+  display: none
+  &:checked + .option-label
+    color: #fff
+    background: #2a83a2
+
+.option-text
+  transition: .3s ease-in
+  float: left
+  height: 2em
+  text-indent: .5em
+  border: 1px solid #cfcfcf
+  background: #fafafa
+  outline: none
+  &:focus
+    border: 1px solid $blue
+
+.option-button
+  float: left
+  color: #fff
+  padding: .3em .8em
+  background: $blue
+  width: 3em
+  text-align: center
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.2)
+  cursor: pointer
+  -webkit-user-select: none
+  user-select: none
+  &:active
+    background: darken($blue, 10)
+
+.render
+  > *
+    &:first-child
+      margin-top: 0
+    &:last-child
+      margin-bottom: 0
+
+  *
+    margin: .75em 0
+
+  h1
+    font-size: 1.25em
+    margin-bottom: 1em
+  h2
+    font-size: 1.21em
+    margin-bottom: 1em
+  h3
+    font-size: 1.15em
+    margin-bottom: 1em
+  h4
+    font-size: 1.1em
+    margin-bottom: 1em
+  h5
+    font-size: 1.05em
+    margin-bottom: 1em
+  h6
+    font-size: 1.02em
+    margin-bottom: 1em
+
+  img
+    display: block
+    max-width: 100%
+    box-sizing: border-box
+    padding: .3em
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    margin: 0 auto
+
+  a
+    color: #2a83a2
+    text-decoration: none
+    transition: .3s ease-in
+    opacity: .55
+    &:hover
+      opacity: 1
+
+  hr
+    height: 1px
+    border-width: 0 0 1px 0
+    border-style: solid
+    border-color: #cfcfcf
+    margin: 1.3em 0
+
+  pre
+    color: #fff
+    background: mix($blue, #2b2b2b, 10%)
+    padding: 1em
+
+  li
+    margin: .25em 0
+
+  ul, ol
+    ul, ol
+      margin: .25em 0
