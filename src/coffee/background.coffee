@@ -39,7 +39,7 @@ chrome.runtime.onInstalled.addListener () ->
         pinIdx: -1
       memos: []
       options:
-        write: 'normal'
+        write: 'markdown'
         target: '_self'
         font: null
 

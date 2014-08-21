@@ -51,8 +51,8 @@ chrome.runtime.onInstalled.addListener(function() {
       },
       memos: [],
       options: {
-        write: 'normal',
-        target: 'self',
+        write: 'markdown',
+        target: '_self',
         font: null
       }
     }
@@ -67,6 +67,7 @@ chrome.runtime.onInstalled.addListener(function() {
       onclick: imageMemo
     }
   };
+  chrome.storage.local.remove(['datas'], function() {});
   chrome.storage.local.get(['datas'], function(storageObj) {
     if (Object.keys(storageObj).length < 1) {
       return chrome.storage.local.set(initObj, function() {});
