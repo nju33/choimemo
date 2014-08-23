@@ -29,7 +29,16 @@ chrome.storage.local.get ['datas'], (storageObj) ->
           copyDatas = make.clone(@datas)
           copyDatas.reverse()
         setScroll: ->
-          window.scrollTo 0, document.getElementById("memo-#{@setting.pinIdx}").offsetTop + 19 if @setting.pinIdx > -1
+          img = document.getElementsByTagName('img')
+          if img
+            imgObj = new Image
+            imgSrc = img[img.length-1].src
+            imgObj.src = imgSrc
+            imgObj.onload = =>
+              setTimeout =>
+                window.scrollTo 0, document.getElementById("memo-#{@setting.pinIdx}").offsetTop + 19 if @setting.pinIdx > -1
+              , 300
+
 
       methods:
         showNewMemo: ->

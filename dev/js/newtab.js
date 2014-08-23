@@ -85,8 +85,21 @@ chrome.storage.local.get(['datas'], function(storageObj) {
           return copyDatas.reverse();
         },
         setScroll: function() {
-          if (this.setting.pinIdx > -1) {
-            return window.scrollTo(0, document.getElementById("memo-" + this.setting.pinIdx).offsetTop + 19);
+          var img, imgObj, imgSrc;
+          img = document.getElementsByTagName('img');
+          if (img) {
+            imgObj = new Image;
+            imgSrc = img[img.length - 1].src;
+            imgObj.src = imgSrc;
+            return imgObj.onload = (function(_this) {
+              return function() {
+                return setTimeout(function() {
+                  if (_this.setting.pinIdx > -1) {
+                    return window.scrollTo(0, document.getElementById("memo-" + _this.setting.pinIdx).offsetTop + 19);
+                  }
+                }, 300);
+              };
+            })(this);
           }
         }
       },
