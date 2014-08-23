@@ -43,7 +43,7 @@ addMemo = function(tab, memoMain, mode) {
 };
 
 chrome.runtime.onInstalled.addListener(function() {
-  var initObj, k, menu, obj, v, _results;
+  var initObj;
   initObj = {
     datas: {
       setting: {
@@ -57,6 +57,15 @@ chrome.runtime.onInstalled.addListener(function() {
       }
     }
   };
+  return chrome.storage.local.get(['datas'], function(storageObj) {
+    if (Object.keys(storageObj).length < 1) {
+      return chrome.storage.local.set(initObj, function() {});
+    }
+  });
+});
+
+chrome.runtime.onStartup.addListener(function() {
+  var k, menu, obj, v, _results;
   menu = {
     selection: {
       title: 'ChoiMemo に新しくメモ',
@@ -67,11 +76,6 @@ chrome.runtime.onInstalled.addListener(function() {
       onclick: imageMemo
     }
   };
-  chrome.storage.local.get(['datas'], function(storageObj) {
-    if (Object.keys(storageObj).length < 1) {
-      return chrome.storage.local.set(initObj, function() {});
-    }
-  });
   _results = [];
   for (k in menu) {
     v = menu[k];
