@@ -43,6 +43,14 @@ chrome.runtime.onInstalled.addListener () ->
         target: '_self'
         font: null
 
+  # chrome.storage.local.remove ['datas'], () ->
+
+  chrome.storage.local.get ['datas'], (storageObj) ->
+    if Object.keys(storageObj).length < 1
+      chrome.storage.local.set initObj, () ->
+
+
+chrome.runtime.onStartup.addListener () ->
   menu =
     selection:
       title: 'ChoiMemo に新しくメモ'
@@ -50,12 +58,6 @@ chrome.runtime.onInstalled.addListener () ->
     image:
       title: 'ChoiMemo に新しくメモ'
       onclick: imageMemo
-
-  # chrome.storage.local.remove ['datas'], () ->
-
-  chrome.storage.local.get ['datas'], (storageObj) ->
-    if Object.keys(storageObj).length < 1
-      chrome.storage.local.set initObj, () ->
 
   for k,v of menu
     obj =
