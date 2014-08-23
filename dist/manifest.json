@@ -3,7 +3,11 @@
   "name": "ChoiMemo(New Tab)",
   "short_name": "ChoiMemo",
   "description": "選択した文章をメモしたり、画像をメモしたり、又はその両方。新しいタブページでメモした内容をすぐに確認できます。Markdownを使って自分でメモを書くこともできます。",
+<<<<<<< HEAD
   "version": "1.0.1.7",
+=======
+  "version": "1.0.1.6",
+>>>>>>> 7008d86c5927bf0a50cae2f68b6a2e0a0b8dfb6f
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "permissions": [
