@@ -35,7 +35,7 @@ module.exports = (grunt) ->
     imagemin:
       watch:
         expand: true
-        src: '<%= dist.root %>**/*.{png,jpg,jpeg,gif}'
+        src: '<%= dist.root %>/**/*.{png,jpg,jpeg,gif}'
 
 
     htmlmin:
@@ -128,3 +128,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ['watch']
   grunt.registerTask 'dist', ['copy', 'htmlmin', 'cmq', 'csscomb', 'csso', 'ngmin', 'uglify', 'imagemin', 'compress']
+  grunt.registerTask 'all', ['sass', 'browserify' ,'copy', 'htmlmin', 'cmq', 'csscomb', 'csso', 'ngmin', 'uglify', 'imagemin', 'compress']

@@ -443,6 +443,7 @@
   padding: 0.3em;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  cursor: pointer;
 }
 .render a {
   color: #2a83a2;

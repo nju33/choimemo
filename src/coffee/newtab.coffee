@@ -3,8 +3,6 @@ make = require './modules/make'
 chrome.storage.local.get ['datas'], (storageObj) ->
   if !chrome.extension.lastError?
 
-
-
     Vue.directive 'render-memo', (obj) ->
       switch obj.mode
         when 'markdown' then @el.innerHTML = marked obj.main
@@ -29,7 +27,6 @@ chrome.storage.local.get ['datas'], (storageObj) ->
       computed:
         ###*
          * メモの並びを降順にする
-         * @return {array} メモオブジェクトの配列
         ###
         reverseDatas: ->
           copyDatas = make.clone(@datas)
@@ -40,10 +37,9 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         ###
         setScroll: ->
           img = document.getElementsByTagName('img')
-          if img
-            imgObj = new Image
-            imgSrc = img[img.length-2].src
-            imgObj.src = imgSrc
+          if img.length > 1
+            imgObj = new Image()
+            imgObj.src = img[img.length-2].src
             imgObj.onload = =>
               setTimeout =>
                 window.scrollTo 0, document.getElementById("memo-#{@setting.pinIdx}").offsetTop + 19 if @setting.pinIdx > -1

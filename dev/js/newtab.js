@@ -82,7 +82,6 @@ chrome.storage.local.get(['datas'], function(storageObj) {
 
         /**
          * メモの並びを降順にする
-         * @return {array} メモオブジェクトの配列
          */
         reverseDatas: function() {
           var copyDatas;
@@ -94,12 +93,11 @@ chrome.storage.local.get(['datas'], function(storageObj) {
          * ページを開いた時、ピン留したメモまでスクロールする
          */
         setScroll: function() {
-          var img, imgObj, imgSrc;
+          var img, imgObj;
           img = document.getElementsByTagName('img');
-          if (img) {
-            imgObj = new Image;
-            imgSrc = img[img.length - 2].src;
-            imgObj.src = imgSrc;
+          if (img.length > 1) {
+            imgObj = new Image();
+            imgObj.src = img[img.length - 2].src;
             return imgObj.onload = (function(_this) {
               return function() {
                 return setTimeout(function() {
