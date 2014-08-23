@@ -2,3 +2,5 @@
 node_modules/
 ac.png
 *.lip
+*.sublime-project
+*.sublime-workspace

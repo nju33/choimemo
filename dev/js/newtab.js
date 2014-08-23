@@ -50,7 +50,7 @@ var make;
 make = require('./modules/make');
 
 chrome.storage.local.get(['datas'], function(storageObj) {
-  var app;
+  var app, offLightbox, onLightbox;
   if (chrome.extension.lastError == null) {
     Vue.directive('render-memo', function(obj) {
       switch (obj.mode) {
@@ -79,17 +79,26 @@ chrome.storage.local.get(['datas'], function(storageObj) {
         options: storageObj.datas.options
       },
       computed: {
+
+        /**
+         * メモの並びを降順にする
+         * @return {array} メモオブジェクトの配列
+         */
         reverseDatas: function() {
           var copyDatas;
           copyDatas = make.clone(this.datas);
           return copyDatas.reverse();
         },
+
+        /**
+         * ページを開いた時、ピン留したメモまでスクロールする
+         */
         setScroll: function() {
           var img, imgObj, imgSrc;
           img = document.getElementsByTagName('img');
           if (img) {
             imgObj = new Image;
-            imgSrc = img[img.length - 1].src;
+            imgSrc = img[img.length - 2].src;
             imgObj.src = imgSrc;
             return imgObj.onload = (function(_this) {
               return function() {
@@ -120,8 +129,10 @@ chrome.storage.local.get(['datas'], function(storageObj) {
         addReset: function() {
           return setTimeout((function(_this) {
             return function() {
-              document.getElementById('v-add-main').value = '';
-              document.getElementById('v-add-main').blur();
+              var taEl;
+              taEl = document.getElementById('v-add-main');
+              taEl.value = '';
+              taEl.blur();
               return _this.bool.hasNew = false;
             };
           })(this), 300);
@@ -211,7 +222,7 @@ chrome.storage.local.get(['datas'], function(storageObj) {
       }
     });
     app.setScroll;
-    return document.onkeydown = function(e) {
+    document.onkeydown = function(e) {
       var isForm, tag;
       tag = document.activeElement.tagName;
       isForm = tag !== 'TEXTAREA' && tag !== 'INPUT';
@@ -239,6 +250,35 @@ chrome.storage.local.get(['datas'], function(storageObj) {
               return document.getElementById('v-add-main').focus();
             }, 300);
           }
+      }
+    };
+    onLightbox = function(target) {
+      var lightbox, lightboxImg;
+      lightbox = document.getElementById('v-lightbox');
+      lightbox.style.background = 'rgba(0,0,0,.7)';
+      lightbox.style.zIndex = 1000;
+      lightbox.style.display = 'block';
+      lightboxImg = document.getElementById('v-lightbox-img');
+      lightboxImg.src = target.src;
+      lightboxImg.style.height = target.height;
+      lightboxImg.style.width = target.width;
+      lightboxImg.style.maxWidth = '85%';
+      return lightboxImg.style.maxHeight = '85%';
+    };
+    offLightbox = function() {
+      var lightbox;
+      lightbox = document.getElementById('v-lightbox');
+      lightbox.style.background = 'transparent';
+      lightbox.style.zIndex = -1;
+      return lightbox.style.display = 'none';
+    };
+    return document.onclick = function(e) {
+      var target;
+      target = e.target;
+      if (target.tagName === 'IMG') {
+        return onLightbox(target);
+      } else if (target.id === 'v-lightbox' || target.parentNode.id === 'v-lightbox-close') {
+        return offLightbox();
       }
     };
   }

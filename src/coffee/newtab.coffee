@@ -3,6 +3,8 @@ make = require './modules/make'
 chrome.storage.local.get ['datas'], (storageObj) ->
   if !chrome.extension.lastError?
 
+
+
     Vue.directive 'render-memo', (obj) ->
       switch obj.mode
         when 'markdown' then @el.innerHTML = marked obj.main
@@ -25,20 +27,27 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         options: storageObj.datas.options
 
       computed:
+        ###*
+         * メモの並びを降順にする
+         * @return {array} メモオブジェクトの配列
+        ###
         reverseDatas: ->
           copyDatas = make.clone(@datas)
           copyDatas.reverse()
+
+        ###*
+         * ページを開いた時、ピン留したメモまでスクロールする
+        ###
         setScroll: ->
           img = document.getElementsByTagName('img')
           if img
             imgObj = new Image
-            imgSrc = img[img.length-1].src
+            imgSrc = img[img.length-2].src
             imgObj.src = imgSrc
             imgObj.onload = =>
               setTimeout =>
                 window.scrollTo 0, document.getElementById("memo-#{@setting.pinIdx}").offsetTop + 19 if @setting.pinIdx > -1
               , 300
-
 
       methods:
         showNewMemo: ->
@@ -55,8 +64,9 @@ chrome.storage.local.get ['datas'], (storageObj) ->
 
         addReset: () ->
           setTimeout =>
-            document.getElementById('v-add-main').value = ''
-            document.getElementById('v-add-main').blur()
+            taEl = document.getElementById 'v-add-main'
+            taEl.value = ''
+            taEl.blur()
             @bool.hasNew = false
           , 300
 
@@ -143,3 +153,31 @@ chrome.storage.local.get ['datas'], (storageObj) ->
             setTimeout ->
               document.getElementById('v-add-main').focus()
             , 300
+
+    onLightbox = (target) ->
+      lightbox = document.getElementById 'v-lightbox'
+      lightbox.style.background = 'rgba(0,0,0,.7)'
+      lightbox.style.zIndex = 1000
+      lightbox.style.display = 'block'
+
+      lightboxImg = document.getElementById 'v-lightbox-img'
+      lightboxImg.src = target.src
+      lightboxImg.style.height = target.height
+      lightboxImg.style.width = target.width
+      lightboxImg.style.maxWidth = '85%'
+      lightboxImg.style.maxHeight = '85%'
+
+    offLightbox = () ->
+      lightbox = document.getElementById 'v-lightbox'
+      lightbox.style.background = 'transparent'
+      lightbox.style.zIndex = -1
+      lightbox.style.display = 'none'
+
+    document.onclick = (e) ->
+      target = e.target
+      if target.tagName is 'IMG'
+        onLightbox target
+      else if target.id is 'v-lightbox' or target.parentNode.id is 'v-lightbox-close'
+        offLightbox()
+
+
