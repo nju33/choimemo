@@ -2,7 +2,7 @@ module.exports =
   date: ->
     _date = new Date()
     year = _date.getFullYear()
-    month = _date.getMonth()
+    month = _date.getMonth() + 1
     date = _date.getDate()
     hour = _date.getHours()
     minute = ("0" + _date.getMinutes()).slice -2
