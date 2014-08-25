@@ -46,6 +46,17 @@ $red: #cb5b35
   background: #f3f3f3
   overflow: hidden
   box-shadow: 0 0 0 transparent
+  &:before
+    content: ''
+    transition: .3s ease-in
+    display: block
+    position: fixed
+    top: 15em
+    left: 0
+    height: 100vh
+    width: 100vw
+    background: rgba(255,255,255,0)
+
   &:after
     content: ''
     display: block
@@ -55,6 +66,28 @@ $red: #cb5b35
     bottom: 0
     background-image: linear-gradient(to right, transparent, transparent 30%, rgba(0, 0, 0, 0.1), transparent 70%, transparent)
 
+@-webkit-keyframes fadein
+  0%
+    opacity: 0
+    transform: scale(.8)
+  72%
+    opacity: .5
+  100%
+    opacity: 1
+    transform: scale(1)
+
+
+
+@-webkit-keyframes fadeout
+  0%
+    opacity: 1
+    transform: scale(1)
+  72%
+    opacity: .5
+  100%
+    opacity: 0
+    transform: scale(.8)
+
 .amemo-add-button
   font-size: 3.4em
   color: rgba(0, 0, 0, 0.1)
@@ -63,6 +96,7 @@ $red: #cb5b35
   height: 1em
   overflow: hidden
   position: relative
+  z-index: 100
   top: 5px
   border-radius: 50%
   border-width: 0 2px 2px 0
@@ -70,6 +104,7 @@ $red: #cb5b35
   border-color: transparent
   cursor: pointer
   transform: rotate(0deg)
+  // animation-fill-mode: both
   &:hover
     color: #2a83a2
     background: #fff
@@ -78,6 +113,10 @@ $red: #cb5b35
     border-color: transparent
     transform: rotate(0deg)
     transition: background 0.2s ease-in, border-color 0.05s ease-in 0.05s, color 0.2s ease-in 0.3s, transform 0.4s ease-in
+  &.v-enter
+    -webkit-animation: fadein .5s .45s
+  &.v-leave
+    -webkit-animation: fadeout .5s
 
 .amemo-add-act
   .amemo-add-button
@@ -90,6 +129,10 @@ $red: #cb5b35
     transform: rotate(45deg)
   height: 15em
   box-shadow: 0 1px 6px -2px rgba(0, 0, 0, 0.1)
+  &:before
+    transition: .3s ease-in .3s
+    background: rgba(255,255,255,.55)
+
 
 .amemo-add-button
   line-height: 1
@@ -166,12 +209,73 @@ $red: #cb5b35
   color: rgba(255, 255, 255, 0.8)
 
 .amemo-content
+  transition: .3s ease-in
   background: #fff
   padding: .75em
   border: 1px solid rgba(0, 0, 0, 0.1)
   margin: .75em 0
   border-radius: 1px
   position: relative
+  outline: 2px solid transparent
+  outline-offset: -1px
+
+.amemo-checked
+  outline: 2px solid $blue
+
+// @-webkit-keyframes fnav-in
+//   0%
+//     opacity: 0
+//   100%
+//     opacity: 1
+
+// @-webkit-keyframes fnav-out
+//   0%
+//     opacity: 1
+//   100%
+//     opacity: 0
+
+.amemo-marge
+  &
+    height: 4.5em
+    width: 100vw
+    position: absolute
+    top: 0
+
+  &-form
+    font-size: 1.05em
+    overflow: hidden
+    display: inline-block
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    margin: auto
+    width: 14em
+    height: 2em
+    &.v-enter
+      -webkit-animation: fadein .5s .45s
+    &.v-leave
+      -webkit-animation: fadeout .5s
+
+  &-select
+    float: left
+    font-size: inherit
+    font-family: inherit
+    outline: none
+    border: none
+    margin-top: 3px
+    background: transparent
+
+  &-button
+    float: left
+    color: #f3f3f3
+    cursor: pointer
+    background: $blue
+    padding: .3em .5em
+    margin-left: .3em
+    -webkit-user-select: none
+
 
 .amemo-memo
   min-height: 2em

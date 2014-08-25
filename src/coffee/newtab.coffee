@@ -14,6 +14,7 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         bool:
           newMemo: false
           hasNew: false
+          hasChecks: false
         add:
           title: 'メモを追加'
           main: ''
@@ -22,6 +23,10 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         searchText: ''
         setting: storageObj.datas.setting
         datas: storageObj.datas.memos
+        checks: []
+        margeLabels: [
+            '選択順にメモを'
+          ]
         options: storageObj.datas.options
 
       computed:
@@ -93,12 +98,21 @@ chrome.storage.local.get ['datas'], (storageObj) ->
           else @bool.hasNew = false
 
         addMemo: (main) ->
-          if main isnt ''
+          memo = {}
+
+          if typeof main is 'string' and main isnt ''
             memo =
               mode: @options.write
               main: main
               url: 'new tab'
               date: make.date()
+          else if typeof main is 'object'
+            memo = main
+            for idx in @checks
+              storageObj.datas.memos.splice Math.abs(idx - @datas.length + 1), 1
+              chrome.storage.local.set storageObj, ->
+            @checks.length = 0
+            @bool.hasChecks = false
 
           storageObj.datas.memos.push memo
           chrome.storage.local.set storageObj, () =>
@@ -109,8 +123,8 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         addMemoSc: (e, main) ->
           @addMemo(main) if e.keyCode is 13 and e.ctrlKey and document.getElementById('v-add-main').value.length > 0
 
-        deleteMemo: (idx) ->
-          if confirm('このメモを削除しますか？')
+        deleteMemo: (idx, msg) ->
+          if confirm 'このメモを削除しますか？'
             storageObj.datas.memos.splice Math.abs(idx - @datas.length + 1), 1
             chrome.storage.local.set storageObj, ->
 
@@ -126,6 +140,53 @@ chrome.storage.local.get ['datas'], (storageObj) ->
             storageObj.datas.setting.pinIdx = idx
 
           chrome.storage.local.set storageObj, () ->
+
+        ###*
+         * チェック中のメモがあるか
+         * @return {Boolean} あればtrue
+        ###
+        # hasChecks: -> if @checks.length > 0 then true else false
+
+        ###*
+         * チェック済みのメモかどうか判断
+         * @param  {number}  idx メモのインデックス
+         * @return {Boolean}     checkMemoにメモのインデックスが入っているか
+        ###
+        isCheck: (idx) -> if @checks.indexOf(idx) > -1 then true else false
+
+        ###*
+         * `Ctrl` + `Click` 時、メモをチェック用配列へ入れる
+         * @param  {object} e   クリックイベント
+         * @param  {number} idx 配列へ入れるメモのインデックス
+        ###
+        checkMemo: (e, idx) ->
+          if e.ctrlKey
+            checksIdx = @checks.indexOf idx
+            if checksIdx > -1
+              @checks.splice checksIdx, 1
+              @bool.hasChecks = false if @checks.length < 1
+              @checks
+            else
+              @bool.hasChecks = true if @checks.length < 1
+              @checks.push idx
+
+        ###*
+         * チェックされたメモをすべて結合する
+        ###
+        execMarge: () ->
+          memo =
+            mode: null
+            main: ''
+            url: 'new tab'
+            date: make.date()
+
+          for idx, i in @checks
+            memo.mode = @reverseDatas[idx].mode if i is 0
+            memo.main += "#{@reverseDatas[idx].main}\n\n"
+
+          @addMemo memo
+
+          # console.log memo
 
     app.setScroll
 
@@ -165,7 +226,7 @@ chrome.storage.local.get ['datas'], (storageObj) ->
 
     offLightbox = () ->
       lightbox = document.getElementById 'v-lightbox'
-      lightbox.style.background = 'transparent'
+      # lightbox.style.background = 'transparent'
       lightbox.style.zIndex = -1
       lightbox.style.display = 'none'
 

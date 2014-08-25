@@ -50,6 +50,17 @@
   overflow: hidden;
   box-shadow: 0 0 0 transparent;
 }
+.amemo-add:before {
+  content: "";
+  transition: 0.3s ease-in;
+  display: block;
+  position: fixed;
+  top: 15em;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0);
+}
 .amemo-add:after {
   content: "";
   display: block;
@@ -60,6 +71,36 @@
   background-image: linear-gradient(to right, transparent, transparent 30%, rgba(0, 0, 0, 0.1), transparent 70%, transparent);
 }
 
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  72% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  72% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
 .amemo-add-button {
   font-size: 3.4em;
   color: rgba(0, 0, 0, 0.1);
@@ -68,6 +109,7 @@
   height: 1em;
   overflow: hidden;
   position: relative;
+  z-index: 100;
   top: 5px;
   border-radius: 50%;
   border-width: 0 2px 2px 0;
@@ -85,6 +127,12 @@
   transform: rotate(0deg);
   transition: background 0.2s ease-in, border-color 0.05s ease-in 0.05s, color 0.2s ease-in 0.3s, transform 0.4s ease-in;
 }
+.amemo-add-button.v-enter {
+  -webkit-animation: fadein 0.5s 0.45s;
+}
+.amemo-add-button.v-leave {
+  -webkit-animation: fadeout 0.5s;
+}
 
 .amemo-add-act {
   height: 15em;
@@ -98,6 +146,10 @@
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.1);
   transform: rotate(45deg);
+}
+.amemo-add-act:before {
+  transition: 0.3s ease-in 0.3s;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .amemo-add-button {
@@ -183,12 +235,63 @@
 }
 
 .amemo-content {
+  transition: 0.3s ease-in;
   background: white;
   padding: 0.75em;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 0.75em 0;
   border-radius: 1px;
   position: relative;
+  outline: 2px solid transparent;
+  outline-offset: -1px;
+}
+
+.amemo-checked {
+  outline: 2px solid #2a83a2;
+}
+
+.amemo-marge {
+  height: 4.5em;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+}
+.amemo-marge-form {
+  font-size: 1.05em;
+  overflow: hidden;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 14em;
+  height: 2em;
+}
+.amemo-marge-form.v-enter {
+  -webkit-animation: fadein 0.5s 0.45s;
+}
+.amemo-marge-form.v-leave {
+  -webkit-animation: fadeout 0.5s;
+}
+.amemo-marge-select {
+  float: left;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  border: none;
+  margin-top: 3px;
+  background: transparent;
+}
+.amemo-marge-button {
+  float: left;
+  color: #f3f3f3;
+  cursor: pointer;
+  background: #2a83a2;
+  padding: 0.3em 0.5em;
+  margin-left: 0.3em;
+  -webkit-user-select: none;
 }
 
 .amemo-memo {

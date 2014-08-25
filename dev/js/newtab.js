@@ -65,7 +65,8 @@ chrome.storage.local.get(['datas'], function(storageObj) {
       data: {
         bool: {
           newMemo: false,
-          hasNew: false
+          hasNew: false,
+          hasChecks: false
         },
         add: {
           title: 'メモを追加',
@@ -76,6 +77,8 @@ chrome.storage.local.get(['datas'], function(storageObj) {
         searchText: '',
         setting: storageObj.datas.setting,
         datas: storageObj.datas.memos,
+        checks: [],
+        margeLabels: ['選択順にメモを'],
         options: storageObj.datas.options
       },
       computed: {
@@ -171,14 +174,25 @@ chrome.storage.local.get(['datas'], function(storageObj) {
           }
         },
         addMemo: function(main) {
-          var memo;
-          if (main !== '') {
+          var idx, memo, _i, _len, _ref;
+          memo = {};
+          if (typeof main === 'string' && main !== '') {
             memo = {
               mode: this.options.write,
               main: main,
               url: 'new tab',
               date: make.date()
             };
+          } else if (typeof main === 'object') {
+            memo = main;
+            _ref = this.checks;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              idx = _ref[_i];
+              storageObj.datas.memos.splice(Math.abs(idx - this.datas.length + 1), 1);
+              chrome.storage.local.set(storageObj, function() {});
+            }
+            this.checks.length = 0;
+            this.bool.hasChecks = false;
           }
           storageObj.datas.memos.push(memo);
           return chrome.storage.local.set(storageObj, (function(_this) {
@@ -196,7 +210,7 @@ chrome.storage.local.get(['datas'], function(storageObj) {
             return this.addMemo(main);
           }
         },
-        deleteMemo: function(idx) {
+        deleteMemo: function(idx, msg) {
           if (confirm('このメモを削除しますか？')) {
             storageObj.datas.memos.splice(Math.abs(idx - this.datas.length + 1), 1);
             return chrome.storage.local.set(storageObj, function() {});
@@ -216,6 +230,70 @@ chrome.storage.local.get(['datas'], function(storageObj) {
             storageObj.datas.setting.pinIdx = idx;
           }
           return chrome.storage.local.set(storageObj, function() {});
+        },
+
+        /**
+         * チェック中のメモがあるか
+         * @return {Boolean} あればtrue
+         */
+
+        /**
+         * チェック済みのメモかどうか判断
+         * @param  {number}  idx メモのインデックス
+         * @return {Boolean}     checkMemoにメモのインデックスが入っているか
+         */
+        isCheck: function(idx) {
+          if (this.checks.indexOf(idx) > -1) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+
+        /**
+         * `Ctrl` + `Click` 時、メモをチェック用配列へ入れる
+         * @param  {object} e   クリックイベント
+         * @param  {number} idx 配列へ入れるメモのインデックス
+         */
+        checkMemo: function(e, idx) {
+          var checksIdx;
+          if (e.ctrlKey) {
+            checksIdx = this.checks.indexOf(idx);
+            if (checksIdx > -1) {
+              this.checks.splice(checksIdx, 1);
+              if (this.checks.length < 1) {
+                this.bool.hasChecks = false;
+              }
+              return this.checks;
+            } else {
+              if (this.checks.length < 1) {
+                this.bool.hasChecks = true;
+              }
+              return this.checks.push(idx);
+            }
+          }
+        },
+
+        /**
+         * チェックされたメモをすべて結合する
+         */
+        execMarge: function() {
+          var i, idx, memo, _i, _len, _ref;
+          memo = {
+            mode: null,
+            main: '',
+            url: 'new tab',
+            date: make.date()
+          };
+          _ref = this.checks;
+          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+            idx = _ref[i];
+            if (i === 0) {
+              memo.mode = this.reverseDatas[idx].mode;
+            }
+            memo.main += "" + this.reverseDatas[idx].main + "\n\n";
+          }
+          return this.addMemo(memo);
         }
       }
     });
@@ -266,7 +344,6 @@ chrome.storage.local.get(['datas'], function(storageObj) {
     offLightbox = function() {
       var lightbox;
       lightbox = document.getElementById('v-lightbox');
-      lightbox.style.background = 'transparent';
       lightbox.style.zIndex = -1;
       return lightbox.style.display = 'none';
     };
