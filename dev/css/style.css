@@ -149,6 +149,7 @@
 }
 .amemo-add-act:before {
   transition: 0.3s ease-in 0.3s;
+  z-index: 100;
   background: rgba(255, 255, 255, 0.55);
 }
 
@@ -232,6 +233,11 @@
 
 .amemo-new-opacity .amemo-new-button:hover .amemo-new-btnlabel {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.amemo-repeater {
+  position: relative;
+  z-index: 500;
 }
 
 .amemo-content {

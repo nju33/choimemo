@@ -38,7 +38,7 @@
         <textarea v-if="$index == editIdx" id="edit-{{$index}}" class="amemo-memo-edit render" v-model="data.main" v-on="keydown: editMemoSc($event, $index, data)"></textarea>
         <aside class="amemo-meta">
           <div class="amemo-date" v-text="data.date"></div>
-          <div class="amemo-url"><a class="amemo-a" v-attr="href: setUrl(data.url), target: options.target" v-text="data.url"></a></div>
+          <div class="amemo-url"><a class="amemo-a" v-attr="href: setUrl(data.url), target: options.target" v-text="pickDomain(data.url)" title="{{data.url}}"></a></div>
         </aside>
         <aside class="amemo-menu-memo">
           <div role="button" class="amemo-edit" v-class="amemo-edit-act: $index == editIdx" v-on="click: editMemo($index, data)" title="このメモを編集"><i v-class="i-ok: $index == editIdx, i-edit: $index != editIdx"></i></div>

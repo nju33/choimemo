@@ -123,10 +123,19 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         addMemoSc: (e, main) ->
           @addMemo(main) if e.keyCode is 13 and e.ctrlKey and document.getElementById('v-add-main').value.length > 0
 
-        deleteMemo: (idx, msg) ->
+        deleteMemo: (idx) ->
           if confirm 'このメモを削除しますか？'
             storageObj.datas.memos.splice Math.abs(idx - @datas.length + 1), 1
             chrome.storage.local.set storageObj, ->
+
+        pickDomain: (url) ->
+          if url is 'new tab'
+            url
+          else
+            urlMatch = url.match /\/\/(.+?)\/(.*)/
+            if urlMatch[2] is ''
+            then urlMatch[1]
+            else "#{urlMatch[1]}..."
 
         setUrl: (url) ->
           if /^http/.test(url)
@@ -232,9 +241,10 @@ chrome.storage.local.get ['datas'], (storageObj) ->
 
     document.onclick = (e) ->
       target = e.target
-      if target.tagName is 'IMG'
-        onLightbox target
-      else if target.id is 'v-lightbox' or target.parentNode.id is 'v-lightbox-close'
-        offLightbox()
+      if not e.ctrlKey
+        if target.tagName is 'IMG'
+          onLightbox target
+        else if target.id is 'v-lightbox' or target.parentNode.id is 'v-lightbox-close'
+          offLightbox()
 
 

@@ -131,6 +131,7 @@ $red: #cb5b35
   box-shadow: 0 1px 6px -2px rgba(0, 0, 0, 0.1)
   &:before
     transition: .3s ease-in .3s
+    z-index: 100
     background: rgba(255,255,255,.55)
 
 
@@ -207,6 +208,10 @@ $red: #cb5b35
 
 .amemo-new-opacity .amemo-new-button:hover .amemo-new-btnlabel
   color: rgba(255, 255, 255, 0.8)
+
+.amemo-repeater
+  position: relative
+  z-index: 500
 
 .amemo-content
   transition: .3s ease-in

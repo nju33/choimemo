@@ -210,10 +210,23 @@ chrome.storage.local.get(['datas'], function(storageObj) {
             return this.addMemo(main);
           }
         },
-        deleteMemo: function(idx, msg) {
+        deleteMemo: function(idx) {
           if (confirm('このメモを削除しますか？')) {
             storageObj.datas.memos.splice(Math.abs(idx - this.datas.length + 1), 1);
             return chrome.storage.local.set(storageObj, function() {});
+          }
+        },
+        pickDomain: function(url) {
+          var urlMatch;
+          if (url === 'new tab') {
+            return url;
+          } else {
+            urlMatch = url.match(/\/\/(.+?)\/(.*)/);
+            if (urlMatch[2] === '') {
+              return urlMatch[1];
+            } else {
+              return "" + urlMatch[1] + "...";
+            }
           }
         },
         setUrl: function(url) {
@@ -350,10 +363,12 @@ chrome.storage.local.get(['datas'], function(storageObj) {
     return document.onclick = function(e) {
       var target;
       target = e.target;
-      if (target.tagName === 'IMG') {
-        return onLightbox(target);
-      } else if (target.id === 'v-lightbox' || target.parentNode.id === 'v-lightbox-close') {
-        return offLightbox();
+      if (!e.ctrlKey) {
+        if (target.tagName === 'IMG') {
+          return onLightbox(target);
+        } else if (target.id === 'v-lightbox' || target.parentNode.id === 'v-lightbox-close') {
+          return offLightbox();
+        }
       }
     };
   }
