@@ -78,7 +78,7 @@ chrome.storage.local.get(['datas'], function(storageObj) {
         setting: storageObj.datas.setting,
         datas: storageObj.datas.memos,
         checks: [],
-        margeLabels: ['選択順にメモを'],
+        checksSize: 1,
         options: storageObj.datas.options
       },
       computed: {
@@ -277,11 +277,13 @@ chrome.storage.local.get(['datas'], function(storageObj) {
               if (this.checks.length < 1) {
                 this.bool.hasChecks = false;
               }
+              this.$emit('change checks');
               return this.checks;
             } else {
               if (this.checks.length < 1) {
                 this.bool.hasChecks = true;
               }
+              this.$emit('change checks');
               return this.checks.push(idx);
             }
           }
@@ -292,25 +294,34 @@ chrome.storage.local.get(['datas'], function(storageObj) {
          */
         execMarge: function() {
           var i, idx, memo, _i, _len, _ref;
-          memo = {
-            mode: null,
-            main: '',
-            url: 'new tab',
-            date: make.date()
-          };
-          _ref = this.checks;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            idx = _ref[i];
-            if (i === 0) {
-              memo.mode = this.reverseDatas[idx].mode;
+          if (confirm("選択したメモをマージします。\nよろしいですか？\n\n（選択したメモは消去されます）")) {
+            memo = {
+              mode: null,
+              main: '',
+              url: 'new tab',
+              date: make.date()
+            };
+            _ref = this.checks;
+            for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+              idx = _ref[i];
+              if (i === 0) {
+                memo.mode = this.reverseDatas[idx].mode;
+              }
+              memo.main += "" + this.reverseDatas[idx].main + "\n\n";
             }
-            memo.main += "" + this.reverseDatas[idx].main + "\n\n";
+            return this.addMemo(memo);
           }
-          return this.addMemo(memo);
         }
       }
     });
     app.setScroll;
+    app.$on('change checks', function() {
+      return setTimeout(((function(_this) {
+        return function() {
+          return _this.checksSize = _this.checks.length;
+        };
+      })(this)), 0);
+    });
     document.onkeydown = function(e) {
       var isForm, tag;
       tag = document.activeElement.tagName;

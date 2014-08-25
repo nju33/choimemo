@@ -21,10 +21,10 @@
 
       <div class="amemo-marge">
         <div class="amemo-marge-form" v-if="bool.hasChecks" v-animation>
-          <select class="amemo-marge-select" v-model="marge">
+ <!--          <select class="amemo-marge-select" v-model="marge">
             <option value="$value" v-repeat="margeLabels">{{$value}}</option>
-          </select>
-          <div class="amemo-marge-button" role="button" v-on="click: execMarge">マージ</div>
+          </select> -->
+          <div class="amemo-marge-button" role="button" v-on="click: execMarge">選択順にマージ</div><div class="amemo-marge-count">{{checksSize}}</div>
         </div>
       </div>
     </div>

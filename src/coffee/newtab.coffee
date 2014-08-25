@@ -24,9 +24,10 @@ chrome.storage.local.get ['datas'], (storageObj) ->
         setting: storageObj.datas.setting
         datas: storageObj.datas.memos
         checks: []
-        margeLabels: [
-            '選択順にメモを'
-          ]
+        checksSize: 1
+        # margeLabels: [
+        #     '選択順にメモを'
+        #   ]
         options: storageObj.datas.options
 
       computed:
@@ -174,30 +175,33 @@ chrome.storage.local.get ['datas'], (storageObj) ->
             if checksIdx > -1
               @checks.splice checksIdx, 1
               @bool.hasChecks = false if @checks.length < 1
+              @$emit 'change checks'
               @checks
             else
               @bool.hasChecks = true if @checks.length < 1
+              @$emit 'change checks'
               @checks.push idx
 
         ###*
          * チェックされたメモをすべて結合する
         ###
         execMarge: () ->
-          memo =
-            mode: null
-            main: ''
-            url: 'new tab'
-            date: make.date()
+          if confirm "選択したメモをマージします。\nよろしいですか？\n\n（選択したメモは消去されます）"
+            memo =
+              mode: null
+              main: ''
+              url: 'new tab'
+              date: make.date()
 
-          for idx, i in @checks
-            memo.mode = @reverseDatas[idx].mode if i is 0
-            memo.main += "#{@reverseDatas[idx].main}\n\n"
+            for idx, i in @checks
+              memo.mode = @reverseDatas[idx].mode if i is 0
+              memo.main += "#{@reverseDatas[idx].main}\n\n"
 
-          @addMemo memo
-
-          # console.log memo
+            @addMemo memo
 
     app.setScroll
+
+    app.$on 'change checks', -> setTimeout (=> @checksSize = @checks.length), 0
 
     document.onkeydown = (e) ->
       tag = document.activeElement.tagName
