@@ -115,9 +115,6 @@ chrome.storage.local.get ['datas'], (storageObj) ->
               tgtIdx = @checks.shift()
               @checks = @checks.map (idx) -> if idx > tgtIdx then --idx else idx
               storageObj.datas.memos.splice Math.abs(tgtIdx - storageObj.datas.memos.length + 1), 1
-            # for idx in @checks
-            #   storageObj.datas.memos.splice Math.abs(idx - storageObj.datas.memos.length + 1), 1
-            #   @checks
             chrome.storage.local.set storageObj, ->
             @checks.length = 0
             @bool.hasChecks = false
