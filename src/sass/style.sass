@@ -209,9 +209,13 @@ $red: #cb5b35
 .amemo-new-opacity .amemo-new-button:hover .amemo-new-btnlabel
   color: rgba(255, 255, 255, 0.8)
 
-// .amemo-repeater
-//   position: relative
-//   z-index: 500
+.amemo-repeater
+  transition: .0s ease-in
+  -webkit-filter: blur(0)
+
+.amemo-blur
+  transition: .0s ease-in .45s
+  -webkit-filter: blur(7px)
 
 .amemo-content
   transition: .3s ease-in

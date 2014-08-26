@@ -29,7 +29,8 @@
       </div>
     </div>
     <input class="amemo-search" type="text" v-model="searchText" placeholder="メモを検索">
-    <div class="amemo-repeater" v-repeat="data: reverseDatas | filterBy searchText" v-on="click: checkMemo($event, $index)">
+
+    <div class="amemo-repeater" v-class="amemo-blur: bool.newMemo" v-repeat="data: reverseDatas | filterBy searchText" v-on="click: checkMemo($event, $index)">
       <div id="memo-{{$index}}" class="amemo-content" v-class="amemo-checked: isCheck($index)">
         <aside class="amemo-menu-page">
           <div role="button" class="amemo-pin" title="メモをピン止め" v-class="amemo-pin-act: $index == setting.pinIdx" v-on="click: onPin($index)"><i class="i-pin"></i></div>

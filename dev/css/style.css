@@ -235,6 +235,16 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.amemo-repeater {
+  transition: 0s ease-in;
+  -webkit-filter: blur(0);
+}
+
+.amemo-blur {
+  transition: 0s ease-in 0.45s;
+  -webkit-filter: blur(7px);
+}
+
 .amemo-content {
   transition: 0.3s ease-in;
   background: white;

@@ -195,7 +195,6 @@ chrome.storage.local.get(['datas'], function(storageObj) {
                   return idx;
                 }
               });
-              console.log(Math.abs(tgtIdx - storageObj.datas.memos.length + 1));
               storageObj.datas.memos.splice(Math.abs(tgtIdx - storageObj.datas.memos.length + 1), 1);
             }
             chrome.storage.local.set(storageObj, function() {});
