@@ -174,7 +174,7 @@ chrome.storage.local.get(['datas'], function(storageObj) {
           }
         },
         addMemo: function(main) {
-          var idx, memo, _i, _len, _ref;
+          var count, i, memo, tgtIdx, _i;
           memo = {};
           if (typeof main === 'string' && main !== '') {
             memo = {
@@ -185,12 +185,20 @@ chrome.storage.local.get(['datas'], function(storageObj) {
             };
           } else if (typeof main === 'object') {
             memo = main;
-            _ref = this.checks;
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              idx = _ref[_i];
-              storageObj.datas.memos.splice(Math.abs(idx - this.datas.length + 1), 1);
-              chrome.storage.local.set(storageObj, function() {});
+            count = this.checks.length;
+            for (i = _i = 0; 0 <= count ? _i < count : _i > count; i = 0 <= count ? ++_i : --_i) {
+              tgtIdx = this.checks.shift();
+              this.checks = this.checks.map(function(idx) {
+                if (idx > tgtIdx) {
+                  return --idx;
+                } else {
+                  return idx;
+                }
+              });
+              console.log(Math.abs(tgtIdx - storageObj.datas.memos.length + 1));
+              storageObj.datas.memos.splice(Math.abs(tgtIdx - storageObj.datas.memos.length + 1), 1);
             }
+            chrome.storage.local.set(storageObj, function() {});
             this.checks.length = 0;
             this.bool.hasChecks = false;
           }

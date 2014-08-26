@@ -49,34 +49,34 @@ chrome.runtime.onInstalled.addListener () ->
     if Object.keys(storageObj).length < 1
       chrome.storage.local.set initObj, () ->
 
-  menu =
-    selection:
-      title: 'ChoiMemo に新しくメモ'
-      onclick: selectionMemo
-    image:
-      title: 'ChoiMemo に新しくメモ'
-      onclick: imageMemo
+menu =
+  selection:
+    title: 'ChoiMemo に新しくメモ'
+    onclick: selectionMemo
+  image:
+    title: 'ChoiMemo に新しくメモ'
+    onclick: imageMemo
 
-  for k,v of menu
-    obj =
-      title: v.title
-      contexts: [k]
-      onclick: v.onclick
-    chrome.contextMenus.create obj
+for k,v of menu
+  obj =
+    title: v.title
+    contexts: [k]
+    onclick: v.onclick
+  chrome.contextMenus.create obj
 
 
-chrome.runtime.onStartup.addListener () ->
-  menu =
-    selection:
-      title: 'ChoiMemo に新しくメモ'
-      onclick: selectionMemo
-    image:
-      title: 'ChoiMemo に新しくメモ'
-      onclick: imageMemo
+# chrome.runtime.onStartup.addListener () ->
+#   menu =
+#     selection:
+#       title: 'ChoiMemo に新しくメモ'
+#       onclick: selectionMemo
+#     image:
+#       title: 'ChoiMemo に新しくメモ'
+#       onclick: imageMemo
 
-  for k,v of menu
-    obj =
-      title: v.title
-      contexts: [k]
-      onclick: v.onclick
-    chrome.contextMenus.create obj
+#   for k,v of menu
+#     obj =
+#       title: v.title
+#       contexts: [k]
+#       onclick: v.onclick
+#     chrome.contextMenus.create obj

@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var addMemo, imageMemo, makeDate, selectionMemo, sendObj;
+var addMemo, imageMemo, k, makeDate, menu, obj, selectionMemo, sendObj, v;
 
 makeDate = require('./modules/make').date;
 
@@ -43,7 +43,7 @@ addMemo = function(tab, memoMain, mode) {
 };
 
 chrome.runtime.onInstalled.addListener(function() {
-  var initObj, k, menu, obj, v, _results;
+  var initObj;
   initObj = {
     datas: {
       setting: {
@@ -57,58 +57,33 @@ chrome.runtime.onInstalled.addListener(function() {
       }
     }
   };
-  chrome.storage.local.get(['datas'], function(storageObj) {
+  return chrome.storage.local.get(['datas'], function(storageObj) {
     if (Object.keys(storageObj).length < 1) {
       return chrome.storage.local.set(initObj, function() {});
     }
   });
-  menu = {
-    selection: {
-      title: 'ChoiMemo に新しくメモ',
-      onclick: selectionMemo
-    },
-    image: {
-      title: 'ChoiMemo に新しくメモ',
-      onclick: imageMemo
-    }
-  };
-  _results = [];
-  for (k in menu) {
-    v = menu[k];
-    obj = {
-      title: v.title,
-      contexts: [k],
-      onclick: v.onclick
-    };
-    _results.push(chrome.contextMenus.create(obj));
-  }
-  return _results;
 });
 
-chrome.runtime.onStartup.addListener(function() {
-  var k, menu, obj, v, _results;
-  menu = {
-    selection: {
-      title: 'ChoiMemo に新しくメモ',
-      onclick: selectionMemo
-    },
-    image: {
-      title: 'ChoiMemo に新しくメモ',
-      onclick: imageMemo
-    }
-  };
-  _results = [];
-  for (k in menu) {
-    v = menu[k];
-    obj = {
-      title: v.title,
-      contexts: [k],
-      onclick: v.onclick
-    };
-    _results.push(chrome.contextMenus.create(obj));
+menu = {
+  selection: {
+    title: 'ChoiMemo に新しくメモ',
+    onclick: selectionMemo
+  },
+  image: {
+    title: 'ChoiMemo に新しくメモ',
+    onclick: imageMemo
   }
-  return _results;
-});
+};
+
+for (k in menu) {
+  v = menu[k];
+  obj = {
+    title: v.title,
+    contexts: [k],
+    onclick: v.onclick
+  };
+  chrome.contextMenus.create(obj);
+}
 
 
 
