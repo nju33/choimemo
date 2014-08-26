@@ -107,11 +107,18 @@ chrome.storage.local.get ['datas'], (storageObj) ->
               main: main
               url: 'new tab'
               date: make.date()
+
           else if typeof main is 'object'
             memo = main
-            for idx in @checks
-              storageObj.datas.memos.splice Math.abs(idx - @datas.length + 1), 1
-              chrome.storage.local.set storageObj, ->
+            count = @checks.length
+            for i in [0...count]
+              tgtIdx = @checks.shift()
+              @checks = @checks.map (idx) -> if idx > tgtIdx then --idx else idx
+              storageObj.datas.memos.splice Math.abs(tgtIdx - storageObj.datas.memos.length + 1), 1
+            # for idx in @checks
+            #   storageObj.datas.memos.splice Math.abs(idx - storageObj.datas.memos.length + 1), 1
+            #   @checks
+            chrome.storage.local.set storageObj, ->
             @checks.length = 0
             @bool.hasChecks = false
 
