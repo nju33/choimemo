@@ -157,6 +157,12 @@
   line-height: 1;
 }
 
+.i-add {
+  position: relative;
+  left: 0px;
+  bottom: -3px;
+}
+
 .amemo-new {
   width: 610px;
   margin: 0 auto;
@@ -237,7 +243,6 @@
 
 .amemo-repeater {
   transition: 0s ease-in;
-  -webkit-filter: blur(0);
 }
 
 .amemo-blur {
